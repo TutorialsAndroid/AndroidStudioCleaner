@@ -17,6 +17,16 @@
   <img src="https://img.shields.io/badge/python-3.8%2B-green">
   <img src="https://img.shields.io/badge/license-MIT-yellow">
   <img src="https://img.shields.io/badge/status-stable-brightgreen">
+  <img src="https://img.shields.io/github/v/release/TutorialsAndroid/AndroidStudioCleaner">
+  <img src="https://img.shields.io/github/downloads/TutorialsAndroid/AndroidStudioCleaner/total">
+</p>
+
+---
+
+<p align="center">
+  <a href="https://github.com/TutorialsAndroid/AndroidStudioCleaner/releases/download/v1.0.0/AndroidStudioCleaner.exe">
+    <strong>⬇ Download AndroidStudioCleaner v1.0.0</strong>
+  </a>
 </p>
 
 ---
