@@ -9,11 +9,11 @@
 </p>
 
 <p align="center">
-  A lightweight Windows utility designed for Android developers to recover disk space safely and efficiently.
+  A lightweight cross-platform utility (Windows, macOS, Linux) designed for Android developers to recover disk space safely and efficiently.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/platform-Windows-blue">
+  <img src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue">
   <img src="https://img.shields.io/badge/python-3.8%2B-green">
   <img src="https://img.shields.io/badge/license-MIT-yellow">
   <img src="https://img.shields.io/badge/status-stable-brightgreen">
@@ -90,11 +90,29 @@ Benefits:
 
 ## 🏗 Android Studio Cleanup
 
-Automatically scans:
+Automatically scans the Android Studio configuration directories for your platform:
+
+**Windows**
 
 ```text
 %APPDATA%\Google
 %LOCALAPPDATA%\Google
+```
+
+**macOS**
+
+```text
+~/Library/Application Support/Google
+~/Library/Caches/Google
+~/Library/Logs/Google
+```
+
+**Linux**
+
+```text
+~/.config/Google
+~/.cache/Google
+~/.local/share/Google
 ```
 
 Detects folders such as:

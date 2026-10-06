@@ -3,8 +3,41 @@ import re
 import shutil
 from pathlib import Path
 
-APPDATA = os.getenv("APPDATA")
-LOCALAPPDATA = os.getenv("LOCALAPPDATA")
+import sys
+
+
+def android_studio_base_paths():
+    r"""Directories that hold per-version Android Studio folders.
+
+    Windows: %APPDATA%\Google and %LOCALAPPDATA%\Google
+    macOS:   ~/Library/Application Support/Google, ~/Library/Caches/Google,
+             ~/Library/Logs/Google
+    Linux:   ~/.config/Google, ~/.cache/Google, ~/.local/share/Google
+    """
+    home = Path.home()
+
+    if sys.platform == "win32":
+        candidates = [
+            os.getenv("APPDATA"),
+            os.getenv("LOCALAPPDATA"),
+        ]
+        return [os.path.join(c, "Google") for c in candidates if c]
+
+    if sys.platform == "darwin":
+        return [
+            str(home / "Library" / "Application Support" / "Google"),
+            str(home / "Library" / "Caches" / "Google"),
+            str(home / "Library" / "Logs" / "Google"),
+        ]
+
+    return [
+        str(home / ".config" / "Google"),
+        str(home / ".cache" / "Google"),
+        str(home / ".local" / "share" / "Google"),
+    ]
+
+
+ANDROID_STUDIO_BASE_PATHS = android_studio_base_paths()
 
 GRADLE_DIR = Path.home() / ".gradle"
 
@@ -180,14 +213,9 @@ def cleanup_android_studio():
 
     recovered = 0
 
-    roaming_google = os.path.join(APPDATA, "Google")
-    local_google = os.path.join(LOCALAPPDATA, "Google")
-
-    print("Scanning Roaming Google Directory...")
-    recovered += cleanup_android_studio_versions(roaming_google)
-
-    print("\nScanning Local Google Directory...")
-    recovered += cleanup_android_studio_versions(local_google)
+    for base_path in ANDROID_STUDIO_BASE_PATHS:
+        print(f"\nScanning {base_path} ...")
+        recovered += cleanup_android_studio_versions(base_path)
 
     return recovered
 
@@ -210,12 +238,7 @@ def scan_android_studio_targets():
     delete_targets = []
     keep_targets = []
 
-    google_paths = [
-        os.path.join(APPDATA, "Google"),
-        os.path.join(LOCALAPPDATA, "Google")
-    ]
-
-    for base_path in google_paths:
+    for base_path in ANDROID_STUDIO_BASE_PATHS:
 
         if not os.path.exists(base_path):
             continue
